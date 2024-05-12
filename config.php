@@ -2,7 +2,7 @@
 $servername = 'localhost';
 $username = 'root';
 $password = 'Admin@12345';
-$dbname = 'pte_lms_admin';
+$dbname = 'pte_admin_lms';
 
 try {
     $conn = new mysqli($servername, $username, $password, $dbname);
