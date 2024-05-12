@@ -1,7 +1,7 @@
 <?php
 
 $host     = 'localhost';
-$db       = 'pte_lms_admin';
+$db       = 'pte_admin_lms';
 $user     = 'root';
 $password = 'Admin@12345';
 
