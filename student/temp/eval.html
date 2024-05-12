@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Highlight and Modify Text</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<p id="paragraph">we will the classroom because too this one is, small</p>
+
+<script src="script.js"></script>
+<script>
+ $(document).ready(function(){
+    var missed_words = ["we", "will", "the",  "because", "this", "one", "is", "small"];
+    var additional_words = ["change", "too"];
+    
+    var paragraph = $("#paragraph");
+    var text = paragraph.text();
+
+    // Highlight missed words in red
+    missed_words.forEach(function(word) {
+        var regex = new RegExp("\\b" + word + "\\b", "g");
+        text = text.replace(regex, "<span style='color:red'>" + word + "</span>");
+    });
+
+    // Cut off additional words by a dash
+    additional_words.forEach(function(word) {
+        var regex = new RegExp("\\b" + word + "\\b", "g");
+        text = text.replace(regex, "<s>" + word + "</s>");
+    });
+
+    paragraph.html(text);
+});
+
+
+
+</script>
+</body>
+</html>

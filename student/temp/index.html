@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Communication Example</title>
+</head>
+<body>
+  <button id="openTabButton">Open New Tab with eval.html</button>
+  <div id="messageDisplay"></div>
+
+  <script>
+    document.getElementById('openTabButton').addEventListener('click', function() {
+      // Open a new tab with eval.html
+      const newTab = window.open('eval.html', '_blank');
+
+      // Connect the new tab to the original tab
+      if (newTab) {
+        newTab.onload = function() {
+          const message = 'Hello from the original tab!';
+          newTab.postMessage(message, '*');
+        };
+      }
+
+      // Handle messages from the new tab
+      window.addEventListener('message', function(event) {
+        // Ensure the message is coming from the new tab
+        if (event.source === newTab) {
+          // Handle the message received from the new tab
+          const messageDisplay = document.getElementById('messageDisplay');
+          messageDisplay.textContent = event.data;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

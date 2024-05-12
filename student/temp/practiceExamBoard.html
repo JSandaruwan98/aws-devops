@@ -1,0 +1,1561 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/practiceExam.css">
+
+    <script>
+       
+        $('#discussion').click(function(){
+            $.ajax({
+                url: 'discussion.html',
+                type: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    $('#sub-discussion').html(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching HTML:', error);
+                }
+            });
+        });
+       
+      </script>
+      <style>
+        .comment-popup {
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 1;
+            display: none;
+        }
+        .bold{
+            font-weight: bold;
+        }
+      </style>
+
+</head>
+<body>
+    <!--Section 01 (this section Displayed Question Type)-->
+    <section>
+        <h1 id="type_name" class="ms-5 pb-4 " style="top: -60px; font-weight: normal; font-size: 25px"></h1>
+    </section>
+    <!--Section 02 (this section Displayed main banner image)-->
+    <section class="banner-area relative about-banner" id="home">	
+        <div class="overlay overlay-bg" style="background-color: rgba(0, 65, 65, 0.5);"></div>
+        <div class="container">				
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="about-content col-lg-12">
+                    student/images/Rectangle 114.png
+                </div>	
+            </div>
+        </div>
+    </section>
+    <!--Section 03 (This section is used for recording and submiting answers)-->
+    <section class="feature-area" id="block">
+        <div class="container">
+            <div class="row" >
+                <div class="col-md-12" >
+                    <div class="feature-area" id="feature-area">
+                        <div class="single-feature" id="single-feature">
+                            <div class="title" id="title" style="height: 70px; text-align: justify; padding: 15px;"></div>
+                            <div class="desc-wrap" style="background-color: rgb(218, 253, 253); ">
+                               
+                                <!--************************************************************************************************************-->
+                                <!--timer row-->
+                                <div id="timer_row" class="row">
+                                    <div id="prepair-time" class="col-2">
+                                        <div style="color: red;">Prepair Time</div>
+                                        <div id="prepair-timer" style="color: red;">00:00:00</div>
+                                    </div>
+                                    <div id="recording-bar" class="col-7">
+                                        <div class="progress">
+                                            <div id="myProgressBar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div id="recording-time" class="col-2 ms-5">
+                                        <div data-role="controls">
+                                            <div id="timer">00:00:00</div>
+                                        </div>
+                                        <div data-role="recordings"></div>
+                                    </div>
+                                </div>  
+
+                                <!--************************************************************************************************************-->
+                                <!--question and recording row-->
+                                <div id="qandr_row" class="row">
+                                    <div id="space-col" class="col-2"></div>
+                                    <div id="solution" class="col-7">
+                                        <div id="solution" style="text-align: justify; color: #222; margin-top: 25px; padding-left: 30px; padding-right: 30px;">
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="recording_button" class="col-2 ms-5" style="text-align: cente;">
+                                        <div data-role="controls">
+                                            <button id="recordButton" style="height: 50px; width: 50px; padding-left: 50px;">Record</button>
+                                            <a  href="#" id="submit_reading" class="submit2" style="font-size: 20px; font-weight:400;">Submit</a>
+                                            <div class="spinner-border text-primary" role="status" style="display:inline-block;">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <div data-role="recordings"></div>
+                                    </div>
+                                </div>
+
+                                <!--************************************************************************************************************-->    
+                                <!--text row-->
+                                <div id="text_row" class="row px-5" style="margin-top: 60px; display: none;">
+                                    <textarea name="" id="text_answer" cols="30" rows="10"></textarea>
+                                </div>
+
+                                <!--************************************************************************************************************-->
+                                <!--button row-->      
+                                <div id="button_row" class="row" style="margin-top: 60px;">
+                                    <div class="col-2">
+                                        <a  href="#" id="previous" style="font-size: 20px; font-weight:600; float: left;">Previuos</a>
+                                    </div>
+                                    <div class="col-8">
+                                        <a style="font-size: 20px; font-weight:600;"><span id="currentPage">1</span> /<span id="totalPages">1</span></a>
+                                    </div>
+                                    <div class="col-2">
+                                        <a  href="#" id="next" style="font-size: 20px; font-weight:600; float: right;">Next</a>	
+                                    </div>
+                                </div>
+
+                                
+
+
+                            </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         	 </div>
+        </div>	
+    </section>
+
+    <!--Section 04-->
+    <section id="answer-audio" style="margin-left: 90px; margin-top: 30px;">
+        <audio id="student-answer-audio" controls style="width: 300px; height: 60px;">
+            <source src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <!--Section 05-->
+    <section style="margin-left: 80px; margin-top: 30px;">
+       <h5 style=" font-weight:300">AI Scoring and Audio Answer Download is available after submission.</h5>
+    </section>
+
+    <!--Section 06-->
+    <section style="margin-left: 80px; margin-top: 30px;">
+        <button id="re-do" type="button" class="btn btn-outline-primary" style="width: 100px; height: 35px; font-size: 15px;">Re-do</button>
+        <button type="button" class="btn btn-primary ms-3 text-white" style="width: 120px; height: 35px; font-size: 15px;">Translation</button>
+        <button id="submit_writing" type="button" class="submit1 ms-3 btn btn-outline-primary" style="width: 100px; height: 35px; font-size: 15px;">Submit</button>
+    </section>
+
+    <!--Section 07-->
+    <section style="margin-left: 80px; margin-top: 30px;">
+        <h3 class="ms-5" style="font-size:medium;">Discussion</h3>
+    </section>
+
+    <!--Section 08-->
+    <section style="margin: 60px; margin-top: 30px;">
+        <div type="button" class="tab btn btn-outline-primary" data-tab="tab1" style="width: 100px; height: 35px; font-size: 15px;">Discussion</div>
+        <div type="button" class="tab btn btn-outline-primary" data-tab="tab2" style="width: 100px; height: 35px; font-size: 15px;">Board</div>
+        <div type="button" class="tab btn btn-outline-primary" data-tab="tab3" style="width: 100px; height: 35px; font-size: 15px;">Me</div>
+        
+        <!--*****************************************************************************************************************************************************-->
+        
+        <div class="tab-content" id="tab1">
+            <p>Content for Tab 3 goes here.</p>
+        </div>
+
+        <!--*****************************************************************************************************************************************************-->
+        
+        <div class="tab-content" id="tab2">
+            
+        </div>
+
+        <!--*****************************************************************************************************************************************************-->
+        
+        <div class="tab-content" id="tab3">
+            
+        </div>
+
+        <!--*****************************************************************************************************************************************************-->
+
+        <div class="b1">
+            <div class="overlay-content-popup" id="overlay-content-popup">
+                <div id="cb" class="content-popup">
+                    <div class="container">
+                        <div class="row">
+                            <div style="text-align: left; font-weight: 300;">Score Info</div>
+                        </div>
+                        
+                        <div class="row mx-3">
+                            <div id="score-progress-section" class="col-5 py-3">
+                                <!--using progress bar display for the total score-->
+                                <div id="total" class="row px-2" style="cursor: pointer;">
+                                    <div class="p-2">
+                                        <div class="progress">
+                                            <div class="progress-bar" id="total-progress" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div style="font-weight: 300;">Total  ( <span id="total_score"></span>% )</div>
+                                    </div>     
+                                </div>
+
+                                <!--score cart section-->
+                                <div id="score-section" class="row px-2">
+                                    <div id="score-cart-1" class="col-4 p-1">
+                                        <div id="score-I" class="p-2"  style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px; cursor: pointer;">
+                                            <span id="score-name-1"></span><br><span id="score-marks-1" class="green-text"><span id="score-marks-add-1"></span></span>
+                                        </div>
+                                    </div>
+                                    <div id="score-cart-2" class="col-4 p-1">
+                                        <div id="score-II" class="p-2" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px; cursor: pointer;">
+                                            <span id="score-name-2"></span><br><span id="score-marks-2" class="yellow-text"><span id="score-marks-add-2"></span></span>
+                                        </div>
+                                    </div>
+                                    <div id="score-cart-3" class="col-4 p-1">
+                                        <div id="score-III" class="p-2"  style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px; cursor: pointer;">
+                                            <span id="score-name-3"></span><br><span id="score-marks-3" class="purple-text"><span id="score-marks-add-3"></span></span>
+                                        </div>
+                                    </div>
+                                    <div id="score-cart-4" class="col-4 p-1">
+                                        <div id="score-IV" class="p-2"  style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px; cursor: pointer;">
+                                            <span id="score-name-4"></span><br><span id="score-marks-4" class="orange-text"><span id="score-marks-add-4"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                    
+                    
+                                <!--score anlysis and suggesion section-->
+                                <div id="tl-section-1" class="togel-section1">
+                                    
+                                    <div id="skill-analysis-label" class="row px-2">
+                                        <div class="p-2"></div><h4 class="h6" style="text-align: left;">Skill Analysis</h4>
+                                        <p class="lh-sm" style="font-weight: 500; font-size: 10px; text-align:justify">The following scores show how you have performed in different aspects as compared to other users. These scores can be used to analyse how you can improve in this question, but they are not directly related to the PTE scores.</p>
+                                    </div>
+    
+                                    <!--Each presentation is described using a progress bar of pronunciation, fluency, stress and speed-->
+                                    <div id="skill-analysis-progressbar" class="row">
+                                        <div class="p-2"  style="background-color: white; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px;">
+                                            <div>
+                                                <div class="progress mt-1">
+                                                    <div id="pronoun-progress" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h4 class="h6" style="font-size: 10px; text-align: right;"><span style="float: left;">Pronounciation Accuracy</span> <span id="pronoun-precentage"  class="text-primary"></span></h4>
+                                            </div>
+                                            <div>
+                                                <div class="progress mt-1">
+                                                    <div id="fluent-progress" class="progress-bar" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h4 class="h6" style="font-size: 10px; text-align: right;"><span style="float: left;">Fluent</span> <span id="fluent-precentage" class="text-primary"></span></h4>
+                                            </div>
+                                            <div>
+                                                <div class="progress mt-1">
+                                                    <div id="confidence-progress" class="progress-bar" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <h4 class="h6" style="font-size: 10px; text-align: right;"><span style="float: left;">Stress</span> <span id="fluent-precentage" class="text-primary">0%</span></h4>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>    
+                                </div>
+                                
+                                <!--suggestion section-->
+                                <div class="togel-section2" style="display: none;">
+                                    <div id="suggestion" class="row px-2"  style="text-align: left;">
+                                        <div class="p-2"></div><h4 class="h6">Suggestion</h4>
+                                        <p id="suggestion-head" class="lh-sm" style="font-weight: 500; font-size: 10px;"></p>
+                                        <ol id="suggestion-content" style="font-weight: 300; text-align: justify; line-height: 1; font-size: 10px; list-style-type: decimal; margin-left: 10px;">
+                                            <li id="content-1"></li>
+                                            <li id="content-2"></li>
+                                            <li id="content-3"></li>
+                                            <li id="content-4"></li>
+                                        </ol>                                    
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                            
+
+                            <div id="answer-section" class="col-7 ps-5">
+                                <!--student answer audio-->
+                                <div id="stu-answr-audio" class="row">
+                                    <div id="audio-div" class="py-4" style="background-color: white; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); border-radius: 5px;">
+                                        <audio id="user-answer-recording" controls style="width: 300px;">
+                                        </audio>
+                                    </div>
+                                </div>
+             
+
+                                <!--answer error section 01(missed words, additional words and pronunciation suggesions)-->
+                                <div id="answer-evaluation-1" class="row mt-4">
+
+                                    <div type="button" class="tab-a1 pronun btn btn-outline-secondary me-1" data-tab="tab9" style="width: 120px; height: 30px; font-size: 10px; border: 1px solid">Pronunciation</div>
+                                    <div type="button" class="tab-a1 additional btn btn-outline-secondary me-1" data-tab="tab8" style="width: 120px; height: 30px; font-size: 10px; border: 1px solid">Additional Words</div>
+                                    <div type="button" class="tab-a1 missed btn btn-outline-secondary" data-tab="tab7" style="width: 120px; height: 30px; font-size: 10px; border: 1px solid">Missed Words</div>
+
+                                    <!--*****************************************************************************************************************************************************-->
+                                    
+                                    <div class="tab-content-a1" id="tab9" style="border: none">
+                                        <p id="error_colors" class="mb-2" style="color: black; text-align: left;"><span class="dot" style="background-color: green;"></span><span class="me-2"> Good </span><span class="dot" style="background-color: rgb(255, 162, 0);"></span><span class="me-2"> Average </span><span class="dot" style="background-color: red;"></span><span class="me-2"> Bad </span></p>
+                                        <p id="pronun" style="text-align:justify;">fg</p>
+                                    </div>
+                                    <div class="tab-content-a1" id="tab8" style="border: none">
+                                        <p class="mb-2" style="color: black; text-align: left;"></span><span class="dot" style="background-color: red;"></span><span class="me-2"> Additional words </span></p>
+                                        <p id="additional" style="text-align:justify;">Content for Tab 2 goes here.</p>
+                                    </div>
+                                    <div class="tab-content-a1" id="tab7" style="border: none">
+                                        <p class="mb-2" style="color: black; text-align: left;"></span><span class="dot" style="background-color: red;"></span><span class="me-2"> Missed words </span></p>
+                                        <p id="missed" style="text-align:justify;">Content for Tab 3 goes here.</p>
+                                    </div>
+                                </div>
+
+                                <!--answer error section 02(grammar errors)-->
+                                <div id="answer-evaluation-2" class="row">
+                                    <p id="user-answer" style="text-align:justify;">Content for Tab 3 goes here.</p>
+                                </div>
+                                <div id="comment-popup" style="font-weight: 500;"></div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            
+        </div>
+        
+
+    </section>
+    <section id="sub-discussion" style="margin-left: 80px; margin-top: 30px;">
+        <h1></h1>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //get the type of exam passed from top nav bar
+            var fragment = window.location.hash;
+            if (fragment.includes('type')) { var typeValue = parseInt(fragment.split('=')[1]); } 
+            else { console.log('Type parameter not found in the URL.'); }
+
+            //assigned the type name and image
+            if(typeValue == 1){
+                type = 'Read Aloud';
+                image = 'images/img/78c8b120464e6b53b3877ad0de114ad3.jpg';
+            }else if(typeValue == 2){
+                type = 'Repeat Sentence';
+                image = 'images/img/cta-bg.jpg';
+            }else if(typeValue == 3){
+                type = 'Describe image';
+                image = 'images/img/top-banner.jpg';
+            }else if(typeValue == 4){
+                type = 'Re-tell Lecture';
+                image = 'images/img/R.jpg';    
+            }else if(typeValue == 5){
+                type = 'Answer Short Question';
+                image = 'images/img/slider3.png';        
+            }else if(typeValue == 6){
+                type = 'Summarize Written Text';
+                image = 'images/img/corporatefinance.png';        
+            }else if(typeValue == 7){
+                type = 'Write Essay';
+                image = 'images/img/banr01.jpeg';        
+            }
+
+            
+            //display the type name and banner image
+            $('#type_name').text(type);
+            $('#home').css({'background': 'url('+image+') right'})
+
+
+            //assign the recording button, recording-time-progressbar and audio clip
+            const toggleRecordingButton = $('#recordButton');
+            var progressBar = document.getElementById('myProgressBar');
+            const audioPlayer = $('#audioPlayer');
+            
+
+        /*******Question fetch and display section****************************************************************************************************************************************************/
+            
+            //assign the page values
+            var currentPage = 1;
+            var questionsPerPage = 1;
+            let question_id;
+
+            //Question fetch and display function
+            function fetchAndDisplayQuestions(page){
+                $.ajax({
+                    url: `src/controllers/getController.php?data_type=questionDisplay&page=${page}&per_page=${questionsPerPage}&test_id=${11}&type=${type}`,
+                    method: 'GET',
+                    success: function (data) {
+                        if(typeValue === 1){
+                            resetTimer(2)
+                            startTimer(2)
+                            $('#text_row').css('display','none')
+                            $('.submit1').css('display','none')
+                        }else if(typeValue === 2 || typeValue === 4){
+                            resetTimer(3)
+                            startTimer(3)
+                            $('#text_row').css('display','none')
+                            $('.submit1').css('display','none')
+                        }else if(typeValue === 3){
+                            resetTimer(4)
+                            startTimer(4)
+                            $('#text_row').css('display','none')
+                            $('.submit1').css('display','none')
+                        }else if(typeValue === 5){
+                            resetTimer(3)
+                            startTimer(3)
+                            $('#text_row').css('display','none')
+                            $('.submit1').css('display','none')
+                            $('#score-progress-section').addClass('col-12')
+                            $('#answer-section').removeClass('ps-5')
+                            $('#answer-section').addClass('col-12')
+                            $('#audio-div').removeAttr('style')
+                            $('#audio-div').removeClass('py-4')
+                            $('#audio-div').css({'float': 'left'});
+
+                            $('#total').css('display', 'none')
+                        }else if(typeValue === 6 || typeValue === 7){
+                        //remove the all speaking test using items    
+                            $('#recording-bar').css('display', 'none')
+                            $('#recording-time').css('display', 'none')
+                            $('#prepair-time').addClass('mb-4')
+                            $('#space-col').css('display','none')
+                            $('#recording_button').css('display','none')
+                            $('#solution').removeClass('col-7')
+                            $('#solution').addClass('col-12 px-5')
+                            $('#solution').css('text-align', 'left')
+                            $('#title').css('height', '90px')
+                            $('#answer-audio').css('display', 'none')
+                            $('.submit2').css('display','none')
+                        //remve the score popup section item    
+                            $('#score-progress-section').addClass('col-12')
+                            $('#answer-section').removeClass('ps-5')
+                            $('#answer-section').addClass('col-12')
+                            $('#stu-answr-audio').css('display', 'none') 
+                            $('#content-type-error').css('display','none')     
+                        }
+
+                        isRecording = false;
+                        $('#title').empty();
+                        $('#Question').empty();
+                        $('#solution').empty();
+                        totalPages = data['totalItems'].Count;
+                        for (var i = 0; i < data['data'].length; i++) {
+                            Solution = data['data'][i].solution;
+                            type = data['data'][i].type;
+                            KeyWords = data['data'][i].key_words
+                            question_id = data['data'][i].question_id;
+
+                            $('#title').append(`<h2 style="color: white;">${data['data'][i].question}</h2>`);
+                            if(typeValue === 1){
+                                $('#solution').append(`<p>${data['data'][i].solution}</p>`);
+                            }else if(typeValue === 3){
+                                try{
+                                    $('#solution').append(`<img src="${data['data'][i].imageFile}" style="width:450px; padding-left: 25%; height: 250px">`);
+                                }catch(error){
+                                    console.log(error.message)
+                                }
+                            }else if(typeValue === 2 || typeValue === 4 || typeValue === 5){
+                                console.log(type)
+                                $('#solution').append(`
+                                    <audio id = "questionAudio" controls style="width: 400px; margin: 50px">
+                                        <source src="${data['data'][i].audio}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>`);
+                            }else if(typeValue === 6){
+                                var paragraphsArray = Solution.split('"=,');
+                                paragraphsArray = paragraphsArray.map(function(paragraph) {
+                                    return paragraph.trim();
+                                });
+                                console.log(paragraphsArray)
+                                for (var i = 0; i < paragraphsArray.length; i++) {
+                                    $('#solution').append('<p>' + paragraphsArray[i] + '</p>');
+                                }
+
+                            }
+                            
+                        }
+                        function updatePagination() {
+                            $("#currentPage").text(currentPage);
+                            $("#totalPages").text(totalPages);
+                            
+                        }
+                        updatePagination()
+                        discussion(question_id)
+                        
+
+                        
+                    },
+                        error: function () {
+                            alert('Error fetching data.');
+                    }
+
+                })
+            }    
+
+            fetchAndDisplayQuestions(currentPage)
+
+            // Event listener for Previous button
+            $("#previous").on("click", function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchAndDisplayQuestions(currentPage);
+                    resetTimer(1);
+                    resetTimer(2);
+                    resetTimer(3);
+                    resetTimer(4);
+                }
+            });
+        
+            // Event listener for Next button
+            $("#next").on("click", function() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    fetchAndDisplayQuestions(currentPage);
+                    resetTimer(1);
+                    resetTimer(2);
+                    resetTimer(3);
+                    resetTimer(4);
+
+                }
+            });
+
+            
+        /******timer section*****************************************************************************************************************************************************/
+    
+            //assign the variables of time
+            let seconds1 = 0;
+            let seconds2 = 35;
+            let seconds3 = 5;
+            let seconds4 = 25;
+            let minutes = 0;
+            let hours = 0;
+
+            function startTimer(task) {
+                timer = setInterval(function(){updateTimer(task)}, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timer);
+            }
+
+            function resetTimer(task) {             
+                clearInterval(timer);
+                if(task==1){
+                    seconds1 = 0;
+                    progressBar.style.width = 0+'%'
+                }else if(task == 2){
+                    seconds2 = 35;
+                }else if(task == 3){
+                    seconds3 = 5;
+                }else if(task == 4){
+                    seconds4 = 25;
+                }
+                minutes = 0;
+                hours = 0;
+                updateTimerDisplay(task);
+            }
+
+            function updateTimer(task) {
+                if(task==2){
+                    seconds2--;
+                    if (seconds2 === 30) {
+                        clearInterval(timer);
+                        toggleRecordingButton.click();  
+                    }
+                    
+                }else if(task==3){
+                    seconds3--;
+                    if (seconds3 === 0) {
+                        clearInterval(timer);
+                        playAudio() 
+                    }
+                    
+                }else if(task==4){
+                    seconds4--;
+                    if (seconds4 === 0) {
+                        clearInterval(timer);
+                        toggleRecordingButton.click();  
+                    }
+                    
+                }else if(task==1){
+                    //this is progress increasing
+                    var currentWidth = parseFloat(progressBar.style.width, 10);
+                    var newWidth = (currentWidth + 2.5) % 101; 
+                    progressBar.style.width = newWidth + '%';
+                                         
+
+
+                    seconds1++;
+                    if (seconds1 === 40) {
+                        clearInterval(timer);
+                        toggleRecordingButton.click();
+                    }
+                }
+                updateTimerDisplay(task);
+            }
+
+            function updateTimerDisplay(task) { 
+                if(task==1){
+                    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds1)}`;
+                    $("#timer").text(formattedTime);
+                }else if(task==2){
+                    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds2)}`;
+                    $("#prepair-timer").text(formattedTime);
+                }else if(task==3){
+                    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds3)}`;
+                    $("#prepair-timer").text(formattedTime);
+                }else if(task==4){
+                    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds4)}`;
+                    $("#prepair-timer").text(formattedTime);
+                }
+            }
+
+            function pad(value) {
+                return value < 10 ? `0${value}` : value;
+            }
+
+    /********Discussion tab section***************************************************************************************************************************************************/
+
+            $(document).ready(function() {
+                // Show default tab content
+                $('#tab1').show();
+                
+
+                // Tab click event
+                $('.tab').click(function() {
+                    // Hide all tab content
+                    $('.tab-content').hide();
+
+                    // Show the selected tab content
+                    var tabId = $(this).data('tab');
+                    $('#' + tabId).show();
+                });
+
+                $('.tab-a1').click(function() {
+                    // Hide all tab content
+                    $('.tab-content-a1').hide();
+
+                    // Show the selected tab content
+                    var tabId = $(this).data('tab');
+                    $('#' + tabId).show();
+                });
+            });
+
+
+    /*********Discussion Section**************************************************************************************************************************************************/
+
+            function grammar_result(grammar_result){
+                return new Promise(function(resolve, reject) {
+                    $.ajax({
+                        url: 'src/controllers/getController.php?data_type=grammar_result&answer_id=' + grammar_result,
+                        method: 'GET',
+                        success: function(data) {
+                            resolve(data); // Resolve the promise with the fetched data
+                        },
+                        error: function(xhr, status, error) {
+                            reject(error); // Reject the promise if there's an error
+                        }
+                    });
+                });    
+            }
+
+            
+
+            
+            //user answer fetch and display function
+            function discussion(question_id){
+                $.ajax({
+                    url: 'src/controllers/getController.php?data_type=fetchAndDisplay&question_id='+question_id,
+                    method: 'GET',
+                    success: function(data){
+                        
+                        $('#tab3').empty()
+                        for (var i = 0; i < data.length; i++) {
+                            //console.log(data[i].grammar_results)
+                            if(typeValue == 1 || typeValue == 2 || typeValue == 3 || typeValue == 4 || typeValue == 5){
+                                $('#tab3').append(
+                                `<div class="row d-flex mb-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-1 d-flex align-items-center px-4">
+                                                        <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                                        height="60" />
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="row">
+                                                            <div id="user-name" class="col-6 fw-bold text-primary">`+data[i].name+`</div>
+                                                            <div id="attempted-date" class="col-6 fw-bold text-primary" style="text-align: right;">`+data[i].attempted_on+`</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <audio class="m-3" controls style="width: 330px; height: 40px;">
+                                                                <source src="`+data[i].mp4File+`" type="audio/mpeg">
+                                                                Your browser does not support the audio element.
+                                                            </audio>   
+                                                        </div>
+                                                        <div class="row">
+                                                            <div id="score" class="score_info btn btn-outline-primary fw-bold rounded"  style="font-size: 10px; width: 80px;"
+                                                                data-content="`+data[i].content+`" 
+                                                                data-pronounciation="`+data[i].pronunciation+`" 
+                                                                data-oral_fluency="`+data[i].oral_fluency+`" 
+                                                                data-totalScore="`+data[i].totalScore+`"
+                                                                data-additional="`+data[i].additional_words+`"
+                                                                data-missed="`+data[i].missed_words+`"
+                                                                data-audio="`+data[i].mp4File+`"
+                                                                data-solution= "`+data[i].solution+`",
+                                                                data-user_answer= "`+data[i].userAnswer+`"
+                                                                data-pronun_json='`+data[i].json_data+`'
+                                                            >Score Info</div>
+                                                        </div>
+                                                    </div>    
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="deleteCart btn btn-outline-secondary fw-bold rounded border-top-0" data-id="`+data[i].answer_id+`" style="font-size: 10px; float:inline-end;">Delete</div>
+                                    </div>
+                                </div>
+                                `)
+                            }else if(typeValue == 6 || typeValue == 7){
+                               
+                                $('#tab3').append(
+                                `<div class="row d-flex mb-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-1 d-flex align-items-center px-4">
+                                                        <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
+                                                        height="60" />
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="row">
+                                                            <div id="user-name" class="col-6 fw-bold text-primary">`+data[i].name+`</div>
+                                                            <div id="attempted-date" class="col-6 fw-bold text-primary" style="text-align: right;">`+data[i].attempted_on+`</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <p class="m-3 pe-5" style="text-align: justify; line-height: 1.3;">`+data[i].userAnswer+`</p>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div id="score" class="score_info btn btn-outline-primary fw-bold rounded" 
+                                                                style="font-size: 10px; width: 80px;"
+                                                                data-content="`+data[i].content+`"
+                                                                data-grammar="`+data[i].grammar+`"
+                                                                data-vocabulary="`+data[i].vocabulary+`" 
+                                                                data-form="`+data[i].form+`"
+                                                                data-solution= "`+data[i].solution+`",
+                                                                data-user_answer= "`+data[i].userAnswer+`"
+                                                                data-answer_id = "`+data[i].answer_id+`"
+                                                                >
+                                                                Score Info
+                                                            </div>
+                                                        </div>
+                                                    </div>    
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="deleteCart btn btn-outline-secondary fw-bold rounded border-top-0" data-id="`+data[i].answer_id+`"  style="font-size: 10px; float:inline-end;">Delete</div>
+                                    </div>
+                                </div>
+                                `)
+                            }
+                            
+                           
+                        }
+
+                        function createSentence(data) {
+                            var sentence = "";
+                            for (var i = 0; i < data.length; i++) {
+                                sentence += data[i].label + " ";
+                            }
+                            // Remove extra space at the end
+                            sentence = sentence.trim();
+                            // Capitalize the first letter
+                            sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+                            // Add a period at the end
+                            sentence += ".";
+                            return sentence;
+                        }
+
+        /*********Score Section**************************************************************************************************************************************************/                
+
+                        function suggession(keyValue, scoreType, score){
+                            
+                            if(scoreType == 'content'){
+                                $('#suggestion-content').hide()
+                                if(keyValue == 1 || keyValue == 2 || keyValue == 3 || keyValue == 4){
+                                    if(score > 3){
+                                        if(keyValue == 1){
+                                            $('#suggestion-head').text("Great content score!")
+                                        }else if(keyValue == 2){
+                                            $('#suggestion-head').text("Great content score!")
+                                        }else if(keyValue == 3){
+                                            $('#suggestion-head').text("Good content. Keep up!")
+                                        }else if(keyValue == 4){
+                                            $('#suggestion-head').text("Good content. Keep up!")
+                                        }
+                                    }else{
+                                        if(keyValue == 1){
+                                            $('#suggestion-head').text("The content score of RA is also influenced by pronunciation Bad pronunciation will cause trouble in recognizing spoken words.")
+                                        }else if(keyValue == 2){
+                                            $('#suggestion-head').text("Too few words are repeated. Try to aim for at least 4")
+                                        }else if(keyValue == 3){
+                                            $('#suggestion-head').text("A good answer of DI will have: picture info, comparison and conclusion.")
+                                        }else if(keyValue == 4){
+                                            $('#suggestion-head').text("Try to capture more key points from the speech")
+                                        }
+                                    }
+                                }else if(keyValue == 5){
+                                    if(score === 1){
+                                        $('#suggestion-head').text("Correct!")
+                                    }else{
+                                        $('#suggestion-head').text("Inaccurate pronunciation could also result in loss of marks.")
+                                    }
+                                }else if(keyValue == 6){
+                                    if(score == 2){
+                                        $('#suggestion-head').text("Great!")
+                                    }else if(score == 1){
+                                        $('#suggestion-head').text("Try to capture more keypoints.")
+                                    }else if(score == 0){
+                                        $('#suggestion-head').text("Irrelevant content. No further scoring")
+                                    }
+                                } 
+                                
+                            }else if(scoreType == 'pronun'){
+                                $('#suggestion-content').show()
+                                if(keyValue == 1 || keyValue == 2 || keyValue == 3 || keyValue == 4){
+                                    if(score > 3){
+                                        $('#suggestion-content').hide()
+                                        if(keyValue == 1){
+                                            $('#suggestion-head').text("Great pronunciation")
+                                        }else if(keyValue == 2){
+                                            return "Great content score!"
+                                        }else if(keyValue == 3){
+                                            return "Good content. Keep up!"
+                                        }else if(keyValue == 4){
+                                            return "Good content. Keep up!"
+                                        }
+                                    }else if(score > 2){
+                                        $('#suggestion-content').show()
+                                        if(keyValue == 1){
+                                            $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                                            $('#content-1').text('a clear speech with correct pronunciation');  
+                                            $('#content-2').text('a smooth tone, without frequent stresses'); 
+                                            $('#content-3').text('a continuous speech, with reasonable pauses');
+                                            $('#content-4').hide()  
+                                        }else if(keyValue == 2){
+                                            $('#suggestion-head').text("aTo ensure a good score in pronunciation, you need:") 
+                                        }else if(keyValue == 3){
+                                            return "A good answer of DI will have: picture info, comparison and conclusion."
+                                        }else if(keyValue == 4){
+                                            return "Try to capture more key points from the speech"
+                                        }
+                                    }else{
+                                        $('#suggestion-content').show()
+                                        $('#content-4').show()
+                                        if(keyValue == 1){
+                                            $('#suggestion-head').text("A low score in pronunciation may be caused by:")
+                                            $('#content-1').text('unrecognizable pronunciation');  
+                                            $('#content-2').text('speaking too fast / slow'); 
+                                            $('#content-3').text('speaking with too few to too many pauses');  
+                                            $('#content-4').text('speaking with a heavy tone, too many stresses');                                        
+                                        }
+                                    }
+                                }
+                                
+                            }else if(scoreType == 'grammar'){
+                                if(score == 2){
+                                    $('#suggestion-head').text("Great grammar!")
+                                }else if(score == 1){
+                                    $('#suggestion-head').text("Click on the colored texts to check grammar error details.")
+                                }else if(score == 0){
+                                    $('#suggestion-head').text("Too many grammar mistakes. Click on the colored texts to check grammar error details.")
+                                }
+                            }else if(scoreType == 'form'){
+                                if(score == 1){
+                                    $('#suggestion-head').text("Great form!")
+                                }else if(score == 0){
+                                    $('#suggestion-head').text("SWT answer can only have 1 sentence. You have 3 sentences in your answer. 0 for form and no further scoring.")
+                                }
+                            }else if(scoreType == 'vocabulary'){
+                                if(score == 2){
+                                    $('#suggestion-head').text("Great")
+                                }else{
+                                    $('#suggestion-head').text("Using words from the original text is allowed in SWT. But also pay attention to spelling and grammar while copying.")
+                                }
+                            }
+                        }
+
+                        $('.deleteCart').click(function (e) {
+                            var answer_id = $(this).data('id')
+                            data = { task : 'delete-practice-answer', answer_id: answer_id }
+                            $.ajax({
+                                url:'src/controllers/postController.php',
+                                type: 'POST',
+                                data: data,
+                                success: function(response){
+                                    console.log(response.message);
+                                    if(response.success){
+                                        console.log(response.message);
+                                        discussion(question_id)
+                                    }else{
+                                        console.log(response.message);
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(response.message);
+                                    //console.log(response.comment);
+                                    console.error('Error saving audio:', error); 
+                                }
+                            })
+                        });
+
+                        
+                        $('.score_info').click(function (e) {
+                            
+                            $('.tab-content-a1').hide();
+                            $('#tab9').show();
+
+                            //speaking section
+                            var content = $(this).data('content');
+                            var pronounciation = $(this).data('pronounciation');
+                            var oral_fluency = $(this).data('oral_fluency');
+                            var additional = $(this).data('additional');
+                            var missed = $(this).data('missed');
+                            var audio = $(this).data('audio');
+                            var solution = $(this).data('solution')
+                            var user_answer = $(this).data('user_answer')
+                            var audioDiv = $('#user-answer-recording')
+                            var pronun_json = $(this).data('pronun_json')
+                            //var pronun_json = [{"label":"These","score":66,"confidence":84},{"label":"outer","score":34,"confidence":1},{"label":"planets","score":71,"confidence":1},{"label":"including","score":72,"confidence":16},{"label":"Jupiter","score":38,"confidence":0},{"label":"Saturan","score":66,"confidence":86},{"label":"Uranus","score":49,"confidence":62},{"label":"and","score":100,"confidence":84},{"label":"Neptune","score":33,"confidence":86},{"label":"exhibit","score":41,"confidence":0},{"label":"stunning","score":14,"confidence":0},{"label":"rings","score":50,"confidence":1},{"label":"Colossus","score":59,"confidence":38},{"label":"storms","score":59,"confidence":1},{"label":"like","score":100,"confidence":83},{"label":"the","score":73,"confidence":15},{"label":"great","score":97,"confidence":66},{"label":"red","score":66,"confidence":0},{"label":"spot","score":50,"confidence":1},{"label":"and","score":67,"confidence":1},{"label":"atomosphere","score":10,"confidence":1},{"label":"primary","score":42,"confidence":9},{"label":"composed","score":57,"confidence":3},{"label":"of","score":1,"confidence":2},{"label":"hydrogen","score":44,"confidence":2},{"label":"and","score":34,"confidence":3},{"label":"helium","score":7,"confidence":1}];
+                            
+                            //console.log('new')
+                            //console.log(finalSentence);
+
+                            //written section
+                            var grammar = $(this).data('grammar')
+                            var vocabulary = $(this).data('vocabulary')
+                            var form = $(this).data('form')
+                            var answer_id = $(this).data('answer_id')
+                            
+                            //overol marks
+                            var totalScore = 0;
+                            var precentage = 0;
+
+                            suggession(typeValue, 'content', content);
+                            
+                            //json data
+                            //var pronun_json = $(this).data('grammar_json')
+                            
+                            
+                            $('.b1').css('display','block')
+                            $('#overlay-content-popup').toggle();
+                            $('#cb').toggle();
+
+                            //speaking -> answer short question content score assign
+                            $('#content-marks-asq').text(content)
+
+                            //written score assign
+                            $('#content-marks-swt').text(content)
+                            $('#grammar-marks-swt').text(grammar)
+                            $('#vocabulary-marks-swt').text(vocabulary)
+                            $('#form-marks-swt').text(form)
+
+                           
+
+                            
+                            
+
+                            audioDiv.attr('src', audio)
+                            audioDiv.attr('type', 'audio/mpeg')
+
+                            console.log(content+pronounciation+oral_fluency)
+
+                            
+                            $('#missed-words').css('color', '')
+                            $('#additional-words').css('color', '')
+
+                            //score content create
+
+                            if(typeValue == 1 || typeValue == 2 || typeValue == 3 || typeValue == 4){
+
+                                totalScore = (content + pronounciation)/2
+                                precentage = (totalScore / 5) * 100
+                                $('#total_score').text(precentage)
+                                $('#total-progress').css('width', precentage+'%' )
+                                
+                                var pronounciation_precentage = (pronounciation / 5) * 100
+
+                                $('#pronoun-progress').css('width', pronounciation_precentage + '%')
+                                $('#pronoun-precentage').text(pronounciation_precentage + '%')
+
+                                $('#fluent-progress').css('width', oral_fluency + '%')
+                                $('#fluent-precentage').text(oral_fluency + '%')
+                                
+                                $('#score-name-1').text('Content');
+                                $('#score-marks-add-1').text(content+'/5');
+
+                                $('#score-name-2').text('Pronun');
+                                $('#score-marks-add-2').text(pronounciation+'/5');
+                                $('#score-name-3').text('Fluency');
+                                $('#score-marks-add-3').text(oral_fluency+'/5');
+                                $('#score-cart-4').css('display','none')
+
+                                $('#score-section-asq').css('display','none')
+                                $('#score-section-swt').css('display','none')
+                                var finalSentence = createSentence(pronun_json);
+                                if(typeValue == 4){
+                                    var pronun_paragraph = $('#pronun').text(finalSentence)
+                                }else{
+                                    var pronun_paragraph = $('#pronun').text(user_answer)
+                                }
+
+                                $.each(pronun_json, function(index, word) {
+                                    //console.log(word['label'])
+                                    //console.log(word['score'])
+                                    var regex = new RegExp('\\b' + word['label'] + '\\b', 'gi'); // Use word boundaries and case-insensitive matching
+                                    if(word['score'] >= 80){
+                                        pronun_paragraph.html(pronun_paragraph.html().replace(regex, '<span class="highlight" style="color: green;">' + word['label'] + '</span>'))    
+                                    }else if(word['score'] >= 40){
+                                        pronun_paragraph.html(pronun_paragraph.html().replace(regex, '<span class="highlight" style="color: rgb(255, 162, 0);">' + word['label'] + '</span>'))    
+                                    }else if(word['score'] >= 0){
+                                        pronun_paragraph.html(pronun_paragraph.html().replace(regex, '<span class="highlight" style="color: red;">' + word['label'] + '</span>'))    
+                                    }
+                                });
+
+                                if(typeValue == 1 || typeValue == 2){
+
+
+                                    $('#content-swt-score').addClass('white-text');
+                                    $('#content-swt').addClass('blue-background');
+
+                                    var additional_words_paragraph = $('#additional').text(user_answer)
+                                    var additional = additional.split(/[ ,.:]+/).filter(Boolean)
+                                    $.each(additional, function(index, word) {
+                                        var regex = new RegExp('\\b' + word+ '\\b', 'gi'); // Use word boundaries and case-insensitive matching
+                                        additional_words_paragraph.html(additional_words_paragraph.html().replace(regex, '<span class="highlight" style="color: red;">' + word + '</span>'))    
+
+                                    });
+
+                                    var missed_words_paragraph = $('#missed').text(solution)
+                                    var missed = missed.split(/[ ,.:]+/).filter(Boolean)
+                                    $.each(missed, function(index, word) {
+                                        var regex = new RegExp('\\b' + word+ '\\b', 'gi'); // Use word boundaries and case-insensitive matching
+                                        missed_words_paragraph.html(missed_words_paragraph.html().replace(regex, '<span class="highlight" style="color: red;">' + word + '</span>'))    
+
+                                    });
+
+                                    $('#header-title').text('Content')
+                                    
+                                }else if(typeValue == 3 || typeValue == 4){
+                                    $('.additional').hide()
+                                    $('.missed').hide()
+                                    $('#header-title').text('Speech Recognition')
+                                    $('#content-type-error').css('display','none')
+                                }
+                            }else if(typeValue == 5){
+
+                                $('#score-cart-1').removeClass('col-4').addClass('col-12');
+                                $('#score-cart-2').css('display','none');
+                                $('#score-cart-3').css('display','none');
+                                $('#score-cart-4').css('display','none');
+
+                                $('#score-name-1').text('Content');
+                                $('#score-marks-add-1').text(content+'/1');
+
+                                $('#score-I').addClass('blue-background')
+                                $('#score-marks-1').addClass('white-text');
+
+                                $('.pronun').text('AI Speech Recognition')
+                                $('#pronun').text(user_answer)
+                                
+
+                                $('.pronun').css('width','140px')
+                                $('.additional').hide()
+                                $('.missed').hide()
+                                $('#error_colors').css('display','none')
+                                $('#answer-evaluation-2').hide()
+
+                                
+                            }else if(typeValue == 6){
+
+                                $('#togel-section2').hide()
+                                $('#score-I').addClass('blue-background')
+                                $('#score-marks-1').addClass('white-text');
+                                $('#answer-evaluation-1').css('display', 'none')
+
+                                totalScore = (content + grammar + form + vocabulary)/7
+                                precentage = Math.round(totalScore * 100)
+                                $('#total_score').text(precentage)
+                                $('#total-progress').css('width', precentage+'%' )
+                                
+                                //change the responsiness for the score-cart
+                                $('#score-cart-1').removeClass('col-4').addClass('col-3');
+                                $('#score-cart-2').removeClass('col-4').addClass('col-3');
+                                $('#score-cart-3').removeClass('col-4').addClass('col-3');
+                                $('#score-cart-4').removeClass('col-4').addClass('col-3');
+
+                                //adding to the score name and scores
+                                $('#score-name-1').text('Content');
+                                $('#score-marks-add-1').text(content+'/2');
+                                $('#score-name-2').text('Form');
+                                $('#score-marks-add-2').text(form+'/1');
+                                $('#score-name-3').text('Grammar');
+                                $('#score-marks-add-3').text(grammar+'/2');
+                                $('#score-name-4').text('Vocabulary')
+                                $('#score-marks-add-4').text(vocabulary+'/2');
+
+
+                                $('#score-section-asq').css('display','none')
+                                $('#score-section-swt').css('display','none')
+                                $('#total').removeAttr('id', 'total')
+
+                                var paragraph = $('#user-answer').text(user_answer)
+                                grammar_result(answer_id)
+                                    .then(function(data) {
+                                        data.forEach(function(item) {
+                                            let startIndex = parseInt(item.start_index);
+                                            let endIndex = parseInt(item.end_index);
+                                            let coveredText = item.covered_text.replace(/"/g, '');
+                                            let comment = item.comment.replace(/"/g, '');
+
+                                            var regex = new RegExp('\\b' + coveredText + '\\b', 'gi'); // Use word boundaries and case-insensitive matching
+                                            paragraph.html(paragraph.html().replace(regex, '<span class="highlight-word" style="color: #b80707; cursor: pointer;" data-comment="' + comment + '">' + coveredText + '</span>'));
+                                        });
+                                    })
+                                    .catch(function(error) {
+                                        console.error('Error fetching data:', error);
+                                    });
+
+                                $(document).on("click", ".highlight-word", function(e) {
+                                    var comment = $(this).data('comment');
+                                    $(".bold").removeClass("bold");
+                                    $(this).addClass('bold')
+                                    $(this).prev().removeClass("bold");
+                                    console.log(e)
+                                    var popup = $('#comment-popup');
+                                    popup.text(comment);
+                                    //popup.css({ top: e.pageY + 10, left: e.pageX, display: block });
+                                    popup.show();
+                                    $(document).one('click', function() {
+                                        popup.hide();
+                                        $(".bold").removeClass("bold");
+                                    });
+                                    e.stopPropagation();
+                                });
+
+                                $('#comment-popup').click(function(e) {
+                                    e.stopPropagation();
+                                    $(this).removeClass('bold-text')
+                                });
+                                
+                            }
+                            
+
+                            //clicking total score
+                            $('#total').on("click", function(){
+                                $('.togel-section1').show()
+                                $('.togel-section2').hide()
+                                $('#score-IV, #score-III, #score-II, #score-I').removeClass('blue-background');
+                                $('#score-marks-4, #score-marks-3, #score-marks-2, #score-marks-1').removeClass('white-text');
+                            })
+
+                            //clicking content score
+                            $('#score-cart-1').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#score-marks-1').addClass('white-text');
+                                $('#score-I').addClass('blue-background');
+                                $('#score-IV, #score-III, #score-II').removeClass('blue-background');
+                                $('#score-marks-4, #score-marks-3, #score-marks-2').removeClass('white-text');
+
+                                //suggession score
+                                suggession(typeValue, 'content', content);
+                                
+                                
+                            })
+                            $('#score-cart-2').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#score-marks-2').addClass('white-text');
+                                $('#score-II').addClass('blue-background');
+                                $('#score-IV, #score-III, #score-I').removeClass('blue-background');
+                                $('#score-marks-4, #score-marks-3, #score-marks-1').removeClass('white-text');
+                                
+                                //suggession section 
+                                if(typeValue == 1 || typeValue == 2 || typeValue == 3 || typeValue == 4){
+                                    suggession(typeValue, 'pronun', pronounciation);
+                                }else if(typeValue){
+                                    suggession(typeValue, 'form', form);
+                                }                                
+                            })
+                            $('#score-cart-3').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#score-marks-3').addClass('white-text');
+                                $('#score-III').addClass('blue-background');
+                                $('#score-IV, #score-II, #score-I').removeClass('blue-background');
+                                $('#score-marks-4, #score-marks-2, #score-marks-1').removeClass('white-text');
+                                
+                                suggession(typeValue, 'grammar', grammar);
+                                //suggession section 
+                                
+                                
+                            })
+                            $('#score-cart-4').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#score-marks-4').addClass('white-text');
+                                $('#score-IV').addClass('blue-background');
+                                $('#score-III, #score-II, #score-I').removeClass('blue-background');
+                                $('#score-marks-3, #score-marks-2, #score-marks-1').removeClass('white-text');
+                                
+                                suggession(typeValue, 'vocabulary', vocabulary);
+                                //suggession section 
+                                
+                                
+                            })
+
+                             /**$('#content-asq').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#content-score').addClass('white-text');
+                                $('#content').addClass('blue-background');
+                                $('#pronoun, #fluency').removeClass('blue-background');
+                                $('#pronoun-score, #fluency-score').removeClass('white-text');
+                                
+                                if(typeValue === 5){
+                                    console.log(type)
+                                    if(content === 1){
+                                        $('#suggestion-head').text("Correct!")
+                                    }else{
+                                        $('#suggestion-head').text("Inaccurate pronunciation could also result in loss of marks.")
+                                    }
+                                }
+                                
+                                
+                            })
+
+                            //clicking pronoun score
+                           $('#pronoun').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#pronoun-score').addClass('white-text');
+                                $('#pronoun').addClass('blue-background');
+                                $('#content, #fluency').removeClass('blue-background');
+                                $('#content-score, #fluency-score').removeClass('white-text');
+                                $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                            })
+
+                            $('#content-swt').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#content-swt-score').addClass('white-text');
+                                $('#content-swt').addClass('blue-background');
+                                $('#grammar-swt, #form-swt, #vocab-swt').removeClass('blue-background');
+                                $('#grammar-swt-score, #form-swt-score, #vocab-swt-score').removeClass('white-text');
+                                $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                            })
+                            
+                            $('#grammar-swt').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#grammar-swt-score').addClass('white-text');
+                                $('#grammar-swt').addClass('blue-background');
+                                $('#content-swt, #form-swt, #vocab-swt').removeClass('blue-background');
+                                $('#content-swt-score, #form-swt-score, #vocab-swt-score').removeClass('white-text');
+                                $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                            })
+
+                            $('#vocab-swt').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#vocab-swt-score').addClass('white-text');
+                                $('#vocab-swt').addClass('blue-background');
+                                $('#grammar-swt, #form-swt, #content-swt').removeClass('blue-background');
+                                $('#content-swt-score, #form-swt-score, #grammar-swt-score').removeClass('white-text');
+                                $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                            })
+
+                            $('#form-swt').on("click", function(){
+                                $('.togel-section2').show()
+                                $('.togel-section1').hide()
+                                $('#form-swt-score').addClass('white-text');
+                                $('#form-swt').addClass('blue-background');
+                                $('#grammar-swt, #vocab-swt, #content-swt').removeClass('blue-background');
+                                $('#content-swt-score, #vocab-swt-score, #grammar-swt-score').removeClass('white-text');
+                                $('#suggestion-head').text("To ensure a good score in pronunciation, you need:")
+                            })
+                            **/
+
+
+                        });
+
+                        $('#close-btn').on("click", function(){
+                            $('.b1').css('display','none')
+                            $('#overlay-content-popup').hide();
+                            $('#cb').hide();
+                        });
+
+                        
+                    
+                        $(document).on("click", function(event){
+                            if(!$(event.target).closest('#score').length && !$(event.target).closest('#cb').length && !$(event.target).closest('.b2').length) {
+                                $('.b1').css('display','none')
+                                $('#overlay-content-popup').hide();
+                                $('#cb').hide();
+                                $('.togel-section2, .togel-section3').hide()
+                                $('#score-IV, #score-III, #score-II, #score-I').removeClass('blue-background');
+                                $('#score-marks-4, #score-marks-3, #score-marks-2, #score-marks-1').removeClass('white-text');                               
+                                
+                                if(typeValue == 6 || typeValue == 5){
+                                    $('.togel-section1').hide()
+                                    $('.togel-section2').show()
+                                    $('#suggestion-content').hide()
+                                }else{
+                                    $('.togel-section1').show()
+                                    $('.togel-section2').hide()
+                                }
+                            }
+                        });
+
+
+                        
+
+                    },
+                    error: function(){
+                        $('#tab3').empty();
+                    }
+                })
+            }
+
+
+            
+
+           
+        /***********************************************************************************************************************************************************/    
+            
+        function playAudio() {
+            var questionAudio = $('#questionAudio')[0];
+
+            if (questionAudio) {
+                questionAudio.removeEventListener('loadedmetadata', handleMetadataLoaded);
+                questionAudio.addEventListener('loadedmetadata', handleMetadataLoaded);
+
+                if (questionAudio.readyState >= 2) {
+                questionAudio.dispatchEvent(new Event('loadedmetadata'));
+                }
+
+                questionAudio.play();
+            } else {
+                console.error("Audio element not found");
+            }
+        }
+
+        function handleMetadataLoaded() {
+            var duration = $('#questionAudio')[0].duration;
+            console.log("Audio duration: " + duration + " seconds");
+
+            recordingTimeout = setTimeout(function () {
+                toggleRecordingButton.click();
+            }, duration * 1000);
+        }
+
+        function stopRecordingTimeout() {
+            if (recordingTimeout) {
+                clearTimeout(recordingTimeout);
+            }
+        }
+
+        /***********************************************************************************************************************************************************/
+
+        function stopAudio(){
+            console.log("audio stop")
+            var questionAudio = $('#questionAudio')[0];
+            questionAudio.pause()
+            questionAudio.currentTime = 0
+            stopRecordingTimeout()
+        }
+
+        /***********************************************************************************************************************************************************/    
+            
+            toggleRecordingButton.on('click', function () {
+                if (!isRecording) {
+                    resetTimer(1)
+                    stopTimer()
+                    startTimer(1)//--> recording timer
+                    startRecording();
+                    toggleRecordingButton.text('Stop Recording');
+                } else {
+                    stopTimer()
+                    stopRecording();
+                    toggleRecordingButton.text('Start Recording');
+                }
+                isRecording = !isRecording;
+            });
+            
+
+        /***********************************************************************************************************************************************************/    
+
+            let audioChunks = [];
+
+            function startRecording() {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(function (stream) {
+                        mediaRecorder = new MediaRecorder(stream);
+
+                        mediaRecorder.ondataavailable = function (event) {
+                            if (event.data.size > 0) {
+                                audioChunks.push(event.data);
+                            }
+                        };
+
+                        mediaRecorder.onstop = function () {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            audioPlayer.attr('src', audioUrl);
+                            console.log(audioUrl)
+                            const formData = new FormData();
+                            formData.append('audio', audioBlob, 'recording.wav');
+                            formData.append('task','save_audio');
+
+                            // Send the recorded audio to the server using $.ajax or $.post
+                            saveAudio(formData);
+
+                            audioChunks = [];
+                        };
+
+                        mediaRecorder.start();
+                        toggleRecordingButton.prop('disabled', false);
+                    })
+                    .catch(function (error) {
+                        console.error('Error accessing microphone:', error);
+                    });
+            }
+   
+        /***********************************************************************************************************************************************************/    
+
+            function stopRecording() {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+            }
+
+        /***********************************************************************************************************************************************************/    
+
+            function saveAudio(formData) {
+                // Send the recorded audio data to the server using $.ajax or $.post
+                $.ajax({
+                    url: 'src/controllers/postController.php',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log('Audio saved successfully:');
+                        console.log(response.audioFile2);
+                        console.log(response)
+                        audioFile = response.audioFile2;
+                    },
+                    error: function (error) {
+                        console.error('Error saving audio:', error);
+                    }
+                });
+            }
+
+        /***********************************************************************************************************************************************************/    
+            
+        $('#submit_reading , #submit_writing').on('click', function(){
+                var answer = $('#text_answer').val();
+                console.log('Ai Scorasdasdsding.........')
+                console.log(type)
+                if(type == 'Read Aloud' || typeValue == 2){
+                    task = 'normal_comparison'
+                    data = { task : task, Solution: Solution, question_id: question_id, student_id: 2, key_words: KeyWords, type: type}
+                }else if(type == 'Describe Image' || type == 'Re-tell Lecture' || type == 'Answer Short Question'){
+                    task = 'ai_analysis'
+                    data = { task : task, Solution: Solution, question_id: question_id, student_id: 2, key_words: KeyWords, type: type}
+                }else if(type == 'Summarize Written Text'){
+                    task = 'writing_marks'
+                    data = { task : task, answer: answer, question_id: question_id, student_id: 2, key_words: KeyWords, type: type}
+                }
+
+                $.ajax({
+                    url:'src/controllers/postController.php',
+                    type: 'POST',
+                    data: data,
+                    success: function(response){
+                        console.log(response.message1);
+
+                        if(response.success){
+                            $('#student-answer-audio').attr('src', 'src/controllers/.recording.wav')
+                            console.log(response.message);
+                            
+                            discussion(question_id)
+                        }else{
+                            console.log(response.message);
+                            console.log(response.sql);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(response.message);
+                        //console.log(response.comment);
+                        console.error('Error saving audio:', error); 
+                    }
+                })
+            });
+
+
+        /***********************************************************************************************************************************************************/    
+
+
+            $('#re-do').on('click', function(){
+                resetTimer(1)
+                $('#student-answer-audio').attr('src', '')
+                if(typeValue == 1){
+                    if(isRecording){
+                        isRecording = !isRecording;
+                    }
+                    resetTimer(2)
+                    startTimer(2)
+                }else if(typeValue == 2 || typeValue == 5 || typeValue == 4){
+                    if(isRecording){
+                        isRecording = !isRecording;
+                    }                    
+                    resetTimer(3)
+                    startTimer(3)
+                    stopAudio()
+                }else if(typeValue == 3){
+                    resetTimer(4)
+                    startTimer(4)
+                }
+                
+
+
+            })
+
+            
+        }) 
+        
+        
+    </script>
+    
+
+
+</body>
+</html>
